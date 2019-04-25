@@ -167,26 +167,99 @@ def hello(name="Treehouse"):
 ```
 
 
-### Review
+### Template Inheritance
+
+- Templates can inherit html from each other and overide the inheritance in specific blocks.
+- Blocks are created with urly brackets and percent sign, {% %}, designates a command area
+- Start/End tags designate a block, ` {% block title %}{% endblock %} `
+
+
+
+- `{% block %}`, defines a block in a template. 
+  - In extended templates, these areas are overridable.
+  - "In templates that extend other templates, this areas will override the parent template's block."
+    ``` {% block title %} Howdy!  | {{ super() }} {% endblock %} ```
+	
+- `{% extends %}`, specifies what template is the parent of the current template, like extended classes in Python. 
+  - You can have a change of extensions if you need them.
+  ``` {% extends "layout.html" %} ```
+  
+- `{{ super() }}`, This function brings in whatever content was in the same block in the parent template. 
+  - Include the existing content and insert new content before or after the old.
+	``` {% block title %} Welcome!  | {{ super() }} {% endblock %} ```
+	
+
+### Example App
+
+```python
+# flask_app.py
+
+from flask import Flask
+from flask import render_template
+
+app = Flask(__name__)
+
+
+@app.route('/')
+def index():
+    return render_template('index.html')
+	
+```
+
+```python
+
+# templates/layout.html
+
+from flask import Flask
+from flask import render_template
+
+app = Flask(__name__)
+
+
+@app.route('/')
+def index():
+    return render_template('index.html')
+	
+```
+
+```python
+
+# templates/index.html
+{%extends 'layout.html'%}
+
+{%block title%} {{ super() }} Homepage {%endblock%}
+
+{%block content%} 
+<h1>Smells Like Bakin'!</h1>
+<p>Welcome to my bakery web site!</p>
+{%endblock%}
+
+```
+
+
+### Review Template & Static Files
 
 - Add an import for render_template. It comes directly from the flask library.
 - Use render_template() to render the "hello.html" template in hello().
 - Pass the name argument to the template. Print the name variable in the <h1> in the template.
 
+#### Create Templates
 
+`templates/layout.html`
+- Create an html file and html doctype, html, head, and body elements
+- Add two blocks to the "layout.html" template. 
+  - Add a block named title around the content of the <title> tag. 
+  - Add a block named content inside the <body> tag.
 
-
-
-
-
-
-
-
-
-
-
-
-
+`templates/index.html`
+- Change "index.html" so it extends "layout.html".
+- Add an h1 and p element and content in the <body> tag in "index.html" in the {% block content %} block.
+- Put the contents of the <title> tag in "index.html" into the title block.
+- Remove everything from "index.html" except for the extends and block tags and their contents.
+- Finally, change the "index.html" <title> tag to be: {{ super() }} Homepage. 
+  - Make sure there's a space before "Homepage".
+  
+  
 ## Sources
 
 - [Flask Basics](https://teamtreehouse.com/library/flask-basics)
