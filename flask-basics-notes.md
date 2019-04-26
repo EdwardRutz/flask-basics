@@ -145,7 +145,9 @@ def multiply(num1 = 5, num2 = 5):
 
 ### Render Templates
 
+- The `render_template()` function is used to process and return a template.
 - "Use {{ and }} to print items in templates."
+- To print the variable `name` in a template, use double curly brackets,  `{{ name }}`
 - "Flask looks for templates in a directory named templates by default." 
     - "This directory should be in the same directory as your app script."
 - Flask automatically uses the templates inside the "templates" folder.
@@ -169,10 +171,12 @@ def hello(name="Treehouse"):
 
 ### Template Inheritance
 
+- Templates can inherit elements from the parent template.
+- To create inheritance use the tag, ` {% extends %} `
 - Templates can inherit html from each other and overide the inheritance in specific blocks.
 - Blocks are created with urly brackets and percent sign, {% %}, designates a command area
 - Start/End tags designate a block, ` {% block title %}{% endblock %} `
-
+- Files rendered by Flask are stored in templates/ by default.
 
 
 - `{% block %}`, defines a block in a template. 
@@ -189,7 +193,7 @@ def hello(name="Treehouse"):
 	``` {% block title %} Welcome!  | {{ super() }} {% endblock %} ```
 	
 
-### Example App
+### Example of Using Templates
 
 ```python
 # flask_app.py
@@ -236,29 +240,131 @@ def index():
 
 ```
 
+### Static Files
+
+- Put static files like css, JavaScript in the static folder
+- CSS, images, and JavaScript are stored in static/ by default.
+- Blocks can be used for JavaScript 
+```python
+{% block scripts %}
+  <script src="/static/scripts.js" ></script>
+{% endblock %}
+```
+
+
+
+
+## 3. Create a Single Page Web App: Character Builder
+
+>The web app will let the user create bear images
+
+- To get to a form in a request, use `request.form`
+
+
+- url_for(): This function finds the URL for a given view function name.
+  - available in templates but importable in the app
+
+redirect(): This function returns an HTTP redirect to whatever URL is provided.
+
+- The `request.form` object data type is an immutable multidict
+
+### Cookies
+
+- Turn form submissions into json
+
+
+
+
+- Response: A response is the data that the server sends back to the client.
+    - Flask operates as a server to answer requests.
+- `make_response()`, function generates the entire response object that'll be sent back to the client
+	- also stores the response in a variable for further manipulation.
+- `response.set_cookie()`, Sets a cookie on the response object. Takes cookie name and a value.
+- `json.dumps()`,method turns a Python data structure into a JSON string.
+	- Python data structures incldue: int, float, list, string, dictionary, etc
+- `json.loads()`, method turns a JSON string into a Python object.
+
+
+
+
+
+
+
+
+
+### 3. Review/Katas
+
+- Code a Flask app with a homepage and one route.
+
+```python
+# /basic-app.py
+
+from flask import Flask
+
+app = Flask(__name__)
+
+
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+
+app.run(debug=True, host='0.0.0.0', port=3000)
+```
+
+- How would you get to the form in the request?
+- What data type is the request.form object?
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Flask Basics Review
 
 ### Review Template & Static Files
 
-- Add an import for render_template. It comes directly from the flask library.
+- Add an import for `render_template`. It comes directly from the flask library.
 - Use render_template() to render the "hello.html" template in hello().
-- Pass the name argument to the template. Print the name variable in the <h1> in the template.
+- Pass the name argument to the template. Print the name variable in the `<h1>` in the template.
 
-#### Create Templates
+
+#### Review: Create Templates
 
 `templates/layout.html`
 - Create an html file and html doctype, html, head, and body elements
 - Add two blocks to the "layout.html" template. 
-  - Add a block named title around the content of the <title> tag. 
-  - Add a block named content inside the <body> tag.
+  - Add a block named title around the content of the `<title>` tag. 
+  - Add a block named content inside the `<body>` tag.
 
 `templates/index.html`
 - Change "index.html" so it extends "layout.html".
-- Add an h1 and p element and content in the <body> tag in "index.html" in the {% block content %} block.
-- Put the contents of the <title> tag in "index.html" into the title block.
+- Add an h1 and p element and content in the `<body>` tag in "index.html" in the {% block content %} block.
+- Put the contents of the `<title>` tag in "index.html" into the title block.
 - Remove everything from "index.html" except for the extends and block tags and their contents.
-- Finally, change the "index.html" <title> tag to be: {{ super() }} Homepage. 
+- Finally, change the "index.html" `<title>` tag to be: `{{ super() }} Homepage`. 
   - Make sure there's a space before "Homepage".
   
+  
+- Files rendered by Flask are stored in which directory by default?
+- CSS, images, and JavaScript are stored in which director by default?
+- What function is used to process and return a template?
+- Write the code to print the variable name in a template?
+
+
+
+
+
   
 ## Sources
 

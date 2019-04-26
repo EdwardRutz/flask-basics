@@ -1,11 +1,14 @@
 <!doctype html>
 <html>
 <head>
+    <link rel="stylesheet" href="/static/styles.css">
     <title>{% block title %}Flask Basics{% endblock %}</title>
 </head>
 <body>
     <header></header>
     <h1>{% block content %}{% endblock %}</h1>
     <p>Brought to you by Rocket</p>
+    
+    {% block scripts %} {% endblock %}
 </body>
 </html>
